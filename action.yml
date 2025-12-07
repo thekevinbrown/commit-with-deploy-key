@@ -25,6 +25,10 @@ inputs:
     description: 'Delete destination directory contents before copy? (default `false`)'
     required: false
     default: false
+  clone_depth:
+    description: 'Git clone depth. Use 0 for full clone, or a positive number for shallow clone (default `1`)'
+    required: false
+    default: '1'
   git_username:
     description: 'Git username'
     required: false

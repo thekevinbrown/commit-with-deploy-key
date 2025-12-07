@@ -22,11 +22,13 @@ ssh-keyscan -H github.com > ~/.ssh/known_hosts
 GIT_SSH='ssh -i /github/home/.ssh/id_rsa -o UserKnownHostsFile=/github/home/.ssh/known_hosts'
 
 # clone the repo into our working directory and cd to it
-GIT_SSH_COMMAND=$GIT_SSH git clone git@github.com:$INPUT_DESTINATION_REPO.git $WORKING_DIR
+# Use shallow clone for faster cloning (clone_depth=0 means full history)
+if [ "${INPUT_CLONE_DEPTH}" = "0" ]; then
+    GIT_SSH_COMMAND=$GIT_SSH git clone --single-branch -b $INPUT_DESTINATION_BRANCH git@github.com:$INPUT_DESTINATION_REPO.git $WORKING_DIR
+else
+    GIT_SSH_COMMAND=$GIT_SSH git clone --depth ${INPUT_CLONE_DEPTH:-1} --single-branch -b $INPUT_DESTINATION_BRANCH git@github.com:$INPUT_DESTINATION_REPO.git $WORKING_DIR
+fi
 cd $WORKING_DIR
-
-# checkout the destination branch, creating it if it doesn't exist
-git checkout $INPUT_DESTINATION_BRANCH || git checkout -b $INPUT_DESTINATION_BRANCH
 
 # ensure destination directory exists, and is emptied if appropriate
 mkdir -p $INPUT_DESTINATION_FOLDER
