@@ -26,6 +26,7 @@ with:
 | `destination_folder` | `false`  | `.`                                | Directory in the destination repo to push changes to    |
 | `destination_branch` | `false`  | `main`                             | Branch in destination repo to push changes to           |
 | `delete_destination` | `false`  | `false`                            | Delete destination directory contents before copy?      |
+| `clone_depth`        | `false`  | `1`                                | Git clone depth. Use `0` for full clone, or a positive number for shallow clone. Default `1` for fastest cloning. |
 | `git_username`       | `false`  | `${{ github.actor }}`              | Github user to use for the commit                       |
 | `git_email`          | `false`  | `${{ github.actor }}`              | Github user to use for the commit                       |
 | `commit_message`     | `false`  | `<action name> from <commit hash>` | Commit message                                          |
